@@ -21,7 +21,7 @@ Una aplicación web moderna para la gestión de archivos con interfaz elegante y
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu-usuario/etherfiles.git
+git clone https://github.com/almamontii/etherfiles.git
 cd etherfiles
 ```
 
@@ -32,6 +32,10 @@ cd etherfiles
 - Haz clic en el área de carga o usa el botón "Seleccionar Archivos"
 - Arrastra y suelta archivos directamente en la zona de carga
 - Explora las características haciendo clic en "Ver Características"
+
+## 🌐 Demo en vivo
+
+**¡Prueba la aplicación aquí!** → [https://almamontii.github.io/etherfiles](https://almamontii.github.io/etherfiles)
 
 ## 📱 Vista previa
 
