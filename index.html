@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EtherFiles - Tu Gestor de Archivos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -113,10 +116,160 @@
             color: #666;
             font-size: 0.9rem;
         }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .search-bar {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+            color: #FF0000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            height: 32px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border: 1px solid #0078d4;
+        }
+
+        .search-bar:empty:before {
+            content: "";
+            pointer-events: none;
+        }
+
+        .search-bar:empty:after {
+            content: "S";
+            color: #4285F4;
+            pointer-events: none;
+        }
+
+        .search-bar:empty:after {
+            content: "S";
+            color: #4285F4;
+            pointer-events: none;
+        }
+
+        .search-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+        }
+
+        .search-placeholder span:nth-child(1) {
+            color: #4285F4;
+        }
+
+        /* S - Azul */
+        .search-placeholder span:nth-child(2) {
+            color: #EA4335;
+        }
+
+        /* e - Rojo */
+        .search-placeholder span:nth-child(3) {
+            color: #FBBC05;
+        }
+
+        /* a - Amarillo */
+        .search-placeholder span:nth-child(4) {
+            color: #4285F4;
+        }
+
+        /* r - Azul */
+        .search-placeholder span:nth-child(5) {
+            color: #34A853;
+        }
+
+        /* c - Verde */
+        .search-placeholder span:nth-child(6) {
+            color: #EA4335;
+        }
+
+        /* h - Rojo */
+
+        .search-label {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #999;
+            pointer-events: none;
+        }
+
+        .typing-area {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #fff;
+            min-height: 120px;
+            outline: none;
+            resize: vertical;
+        }
+
+        .typing-area:focus {
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+
+        .colored-text {
+            display: inline-block;
+        }
+
+        .color-yellow {
+            color: #FF0000;
+        }
+
+        .color-orange {
+            color: #FF0000;
+        }
+
+        .color-brown {
+            color: #FF0000;
+        }
+
+        .color-green {
+            color: #FF0000;
+        }
+
+        .color-purple {
+            color: #FF0000;
+        }
+
+        .color-pink {
+            color: #FF0000;
+        }
     </style>
 </head>
 
 <body>
+    <div class="search-container">
+        <div class="search-bar" id="searchInput" contenteditable="true" placeholder="Search..."></div>
+        <div class="search-placeholder" id="searchPlaceholder">
+            <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>
+        </div>
+    </div>
+
     <div class="container">
         <div class="logo">EtherFiles</div>
         <p class="subtitle">Tu gestor de archivos seguro y moderno</p>
@@ -149,6 +302,19 @@
             <div class="feature">
                 <h3>💾 Confiable</h3>
                 <p>Almacenamiento distribuido y redundante</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <h3 style="color: #fff; margin-bottom: 15px;">Área de Escritura Estilizada</h3>
+            <div class="typing-area" id="typingArea" contenteditable="true" placeholder="Escribe aquí...">
+                <span class="color-yellow">*</span><span class="color-orange">f</span><span
+                    class="color-brown">i</span><span class="color-green">o</span><span
+                    class="color-purple">n</span><span class="color-pink">a</span><span class="color-yellow">*</span>
+            </div>
+            <div style="margin-top: 10px;">
+                <button class="btn" onclick="applyColors()">Aplicar Colores</button>
+                <button class="btn" onclick="clearText()">Limpiar</button>
             </div>
         </div>
     </div>
@@ -191,6 +357,96 @@
 
             const files = e.dataTransfer.files;
             handleFiles(files);
+        });
+
+        // Search functionality with colored text
+        const searchInput = document.getElementById('searchInput');
+        let typingTimer;
+
+        function applySearchColors() {
+            const text = searchInput.textContent;
+            const colors = ['color-yellow', 'color-orange', 'color-brown', 'color-green', 'color-purple', 'color-pink'];
+
+            let coloredText = '';
+            for (let i = 0; i < text.length; i++) {
+                const colorClass = colors[i % colors.length];
+                coloredText += `<span class="${colorClass}">${text[i]}</span>`;
+            }
+
+            searchInput.innerHTML = coloredText;
+
+            // Move cursor to end
+            const range = document.createRange();
+            const sel = window.getSelection();
+            range.selectNodeContents(searchInput);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.textContent.toLowerCase();
+            // Aquí puedes agregar la lógica de búsqueda
+            console.log('Buscando:', searchTerm);
+
+            // Clear previous timer
+            clearTimeout(typingTimer);
+
+            // Apply colors only after user stops typing for 300ms
+            typingTimer = setTimeout(applySearchColors, 300);
+        });
+
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                // Ejecutar búsqueda
+                console.log('Búsqueda ejecutada:', this.textContent);
+            }
+        });
+
+        // Hide placeholder when typing
+        searchInput.addEventListener('input', function () {
+            const placeholder = document.getElementById('searchPlaceholder');
+            if (this.textContent.length > 0) {
+                placeholder.style.display = 'none';
+            } else {
+                placeholder.style.display = 'block';
+            }
+        });
+
+        // Show placeholder when focused and empty
+        searchInput.addEventListener('focus', function () {
+            const placeholder = document.getElementById('searchPlaceholder');
+            if (this.textContent.length === 0) {
+                placeholder.style.display = 'block';
+            }
+        });
+
+        // Typing area functionality
+        function applyColors() {
+            const typingArea = document.getElementById('typingArea');
+            const text = typingArea.textContent;
+            const colors = ['color-yellow', 'color-orange', 'color-brown', 'color-green', 'color-purple', 'color-pink'];
+
+            let coloredText = '';
+            for (let i = 0; i < text.length; i++) {
+                const colorClass = colors[i % colors.length];
+                coloredText += `<span class="${colorClass}">${text[i]}</span>`;
+            }
+
+            typingArea.innerHTML = coloredText;
+        }
+
+        function clearText() {
+            document.getElementById('typingArea').innerHTML = '';
+        }
+
+        // Auto-apply colors as user types
+        const typingArea = document.getElementById('typingArea');
+        typingArea.addEventListener('input', function () {
+            // Only apply colors if the text doesn't already have color spans
+            if (!this.innerHTML.includes('color-')) {
+                setTimeout(applyColors, 100);
+            }
         });
     </script>
 </body>
