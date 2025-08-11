@@ -7,7 +7,7 @@
     <title>EtherFiles - Tu Gestor de Archivos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -129,14 +129,16 @@
             border: 1px solid #333;
             border-radius: 4px;
             padding: 8px 12px;
-            font-family: 'Orbitron', monospace;
-            font-size: 13px;
-            color: #FF0000;
+            font-family: 'Space Mono', monospace;
+            font-weight: 300;
+            font-size: 14px;
+            color: #fff;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            width: 300px;
+            width: 250px;
             height: 32px;
             outline: none;
             transition: all 0.2s ease;
+            text-align: left;
         }
 
         .search-bar:focus {
@@ -149,26 +151,15 @@
             pointer-events: none;
         }
 
-        .search-bar:empty:after {
-            content: "S";
-            color: #4285F4;
-            pointer-events: none;
-        }
-
-        .search-bar:empty:after {
-            content: "S";
-            color: #4285F4;
-            pointer-events: none;
-        }
-
         .search-placeholder {
             position: absolute;
             top: 50%;
             left: 12px;
             transform: translateY(-50%);
             pointer-events: none;
-            font-family: 'Orbitron', monospace;
-            font-size: 13px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 14px;
         }
 
         .search-placeholder span:nth-child(1) {
@@ -365,15 +356,9 @@
 
         function applySearchColors() {
             const text = searchInput.textContent;
-            const colors = ['color-yellow', 'color-orange', 'color-brown', 'color-green', 'color-purple', 'color-pink'];
 
-            let coloredText = '';
-            for (let i = 0; i < text.length; i++) {
-                const colorClass = colors[i % colors.length];
-                coloredText += `<span class="${colorClass}">${text[i]}</span>`;
-            }
-
-            searchInput.innerHTML = coloredText;
+            // Keep text white when typing
+            searchInput.innerHTML = text;
 
             // Move cursor to end
             const range = document.createRange();
