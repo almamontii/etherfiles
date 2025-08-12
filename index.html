@@ -17,25 +17,126 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #4F316E;
+            background: #0a0a0a;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: auto;
+            overflow-y: auto;
             position: relative;
         }
 
-        .gallery-container {
-            position: relative;
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            min-height: 100vh;
-            padding: 5px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .grain::after {
+            content: '';
+            height: 400vh;
+            width: 400vw;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8.0' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            position: absolute;
+            top: calc(50% - 400vh / 2);
+            left: calc(50% - 400vw / 2);
+            animation: grain 8s steps(10) infinite;
+            opacity: 0.15;
+            mix-blend-mode: darken;
+        }
+
+        @keyframes grain {
+            0% {
+                transform: translate(0%, 0%);
+            }
+
+            10% {
+                transform: translate(-3%, -2%);
+            }
+
+            20% {
+                transform: translate(2%, -3%);
+            }
+
+            30% {
+                transform: translate(-4%, 1%);
+            }
+
+            40% {
+                transform: translate(1%, 4%);
+            }
+
+            50% {
+                transform: translate(-6%, 7%);
+            }
+
+            60% {
+                transform: translate(3%, -5%);
+            }
+
+            70% {
+                transform: translate(-2%, 3%);
+            }
+
+            80% {
+                transform: translate(5%, -1%);
+            }
+
+            90% {
+                transform: translate(-1%, -4%);
+            }
+
+            100% {
+                transform: translate(0%, 0%);
+            }
+        }
+
+
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 200px);
+            gap: 0;
+            padding: 0;
+            width: 100%;
+            justify-content: center;
+            margin-top: 80px;
+            position: relative;
+            z-index: 2;
         }
 
         .image-item {
-            position: absolute;
+            width: 200px;
+            height: 200px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: none;
             opacity: 0.9;
-            border-radius: 4px;
+            border-radius: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: relative;
+        }
+
+        .image-item:hover {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        .image-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(245, 241, 235, 0.25);
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-item:hover::after {
+            opacity: 0.05;
         }
 
         .image-item img {
@@ -43,10 +144,6 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
-        }
-
-        .image-item:hover img {
-            transform: scale(1.05);
         }
 
         .image-overlay {
@@ -147,20 +244,37 @@
             color: #EA4335;
         }
 
-
-
-
-
         @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fit, 150px);
+                gap: 0;
+                padding: 0;
+            }
+
             .image-item {
-                max-width: 120px;
-                max-height: 120px;
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fit, 120px);
+                gap: 0;
+                padding: 0;
+            }
+
+            .image-item {
+                width: 120px;
+                height: 120px;
             }
         }
     </style>
 </head>
 
 <body>
+    <div class="grain"></div>
+
     <div class="title-container">
         <h1 class="main-title">etherfiles</h1>
     </div>
@@ -173,41 +287,29 @@
     </div>
 
     <div class="gallery-container" id="galleryContainer">
-        <div
-            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #666; font-size: 1.2rem;">
+        <div style="grid-column: 1 / -1; text-align: center; color: #666; font-size: 1.2rem; padding: 20px;">
             Cargando galería de imágenes...
         </div>
     </div>
 
-
-
-
-
-
-
     <script>
-        // Lista de imágenes disponibles
+        // Lista de imágenes disponibles (todas las que existen en la carpeta)
         const images = [
-            '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg',
-            '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg',
-            '22.jpg', '23.jpg', '24.jpg', '25.jpg', '26.jpg', '27.jpg', '28.jpg', '29.jpg', '30.jpg', '31.jpg',
-            '32.jpg', '33.jpg', '34.jpg', '35.jpg', '36.jpg', '37.jpg', '38.jpg', '39.jpg', '40.jpg', '41.jpg'
+            '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '07.jpg', '08.jpg', '11.jpg', '12.jpg', '13.jpg',
+            '14.jpg', '18.jpg', '20.jpg', '23.jpg', '24.jpg', '25.jpg', '27.jpg', '29.jpg', '31.jpg', '34.jpg',
+            '37.jpg', '38.jpg', '39.jpg', '40.jpg', '41.jpg', '017a2720-0ae1-4121-afa9-b21787c937de.jpeg',
+            'a93b016d-fb22-4b0c-ac5d-370ae15bd51a.jpeg', 'da87d5d7-ecec-4fd0-8d49-777d37763a5d.jpeg'
         ];
 
-        // Títulos descriptivos para las imágenes
+        // Títulos descriptivos para las imágenes (todas las que existen)
         const imageTitles = [
             'Imagen 01 - Arched Entryway', 'Imagen 02 - Man in Suit with Reflection', 'Imagen 03 - Figures by a Bed',
-            'Imagen 04 - Stylized House Structure', 'Imagen 05 - Structure with Orange Objects', 'Imagen 06 - Small Framed Picture',
-            'Imagen 07 - Red Grid Cards', 'Imagen 08 - Dark Abstract Image', 'Imagen 09 - Dimly Lit Bed',
-            'Imagen 10 - Microphone on Stand', 'Imagen 11 - Architectural Detail', 'Imagen 12 - New Image',
-            'Imagen 13 - New Image', 'Imagen 14 - New Image', 'Imagen 15 - New Image', 'Imagen 16 - New Image',
-            'Imagen 17 - New Image', 'Imagen 18 - New Image', 'Imagen 19 - New Image', 'Imagen 20 - New Image',
-            'Imagen 21 - New Image', 'Imagen 22 - New Image', 'Imagen 23 - New Image', 'Imagen 24 - New Image',
-            'Imagen 25 - New Image', 'Imagen 26 - New Image', 'Imagen 27 - New Image', 'Imagen 28 - New Image',
-            'Imagen 29 - New Image', 'Imagen 30 - New Image', 'Imagen 31 - New Image', 'Imagen 32 - New Image',
-            'Imagen 33 - New Image', 'Imagen 34 - New Image', 'Imagen 35 - New Image', 'Imagen 36 - New Image',
-            'Imagen 37 - New Image', 'Imagen 38 - New Image', 'Imagen 39 - New Image', 'Imagen 40 - New Image',
-            'Imagen 41 - New Image'
+            'Imagen 04 - Stylized House Structure', 'Imagen 05 - Structure with Orange Objects', 'Imagen 07 - Red Grid Cards',
+            'Imagen 08 - Dark Abstract Image', 'Imagen 11 - Architectural Detail', 'Imagen 12 - New Image', 'Imagen 13 - New Image',
+            'Imagen 14 - New Image', 'Imagen 18 - New Image', 'Imagen 20 - New Image', 'Imagen 23 - New Image', 'Imagen 24 - New Image',
+            'Imagen 25 - New Image', 'Imagen 27 - New Image', 'Imagen 29 - New Image', 'Imagen 31 - New Image', 'Imagen 34 - New Image',
+            'Imagen 37 - New Image', 'Imagen 38 - New Image', 'Imagen 39 - New Image', 'Imagen 40 - New Image', 'Imagen 41 - New Image',
+            'Nueva Imagen 1', 'Nueva Imagen 2', 'Nueva Imagen 3'
         ];
 
         function shuffleArray(array) {
@@ -223,16 +325,9 @@
             const div = document.createElement('div');
             div.className = 'image-item';
 
-            // Tamaños muy alternados para crear patrón visual interesante
-            const sizes = [40, 120, 60, 180, 80, 140, 50, 160, 90, 130, 70, 150, 45, 110, 75, 170, 85, 125, 55, 145, 95, 135, 65, 155, 42, 115, 68, 165, 88, 128, 72, 148, 48, 108, 78, 158, 82, 122, 58, 142, 92, 132];
-            const sizeIndex = index % sizes.length;
-            const size = sizes[sizeIndex];
-
-            div.style.width = size + 'px';
-            div.style.height = size + 'px';
-
             div.innerHTML = `
                 <img src="images/${imagePath}" alt="${title}" loading="lazy">
+                <div class="image-overlay">${title}</div>
             `;
 
             return div;
@@ -253,61 +348,15 @@
 
             console.log('Imágenes mezcladas:', shuffledImages);
 
-            // Crear elementos de imagen primero
-            const imageElements = shuffledImages.map((image, index) => {
-                return createImageElement(image, shuffledTitles[index], index);
-            });
-
-            // Posicionar imágenes sin superposición
-            const positions = calculateNonOverlappingPositions(imageElements);
-
-            // Aplicar posiciones
-            imageElements.forEach((element, index) => {
-                element.style.left = positions[index].x + 'px';
-                element.style.top = positions[index].y + 'px';
+            // Crear y agregar elementos de imagen
+            shuffledImages.forEach((image, index) => {
+                const element = createImageElement(image, shuffledTitles[index], index);
                 container.appendChild(element);
-                console.log('Imagen agregada:', shuffledImages[index]);
+                console.log('Imagen agregada:', image);
             });
 
             console.log('Galería cargada completamente');
         }
-
-        function calculateNonOverlappingPositions(elements) {
-            const positions = [];
-            const containerWidth = window.innerWidth - 5;
-            const containerHeight = window.innerHeight - 5;
-
-            // Crear un grid que use toda la pantalla
-            const gridCols = 8; // 8 columnas
-            const gridRows = 6; // 6 filas para 41 imágenes (8x6 = 48 posiciones)
-            const cellWidth = containerWidth / gridCols;
-            const cellHeight = containerHeight / gridRows;
-
-            elements.forEach((element, index) => {
-                const col = index % gridCols;
-                const row = Math.floor(index / gridCols);
-
-                // Posición centrada en cada celda del grid
-                const position = {
-                    x: col * cellWidth + (cellWidth - parseInt(element.style.width)) / 2,
-                    y: row * cellHeight + (cellHeight - parseInt(element.style.height)) / 2
-                };
-
-                // Asegurar que esté dentro de los límites
-                position.x = Math.max(0, Math.min(position.x, containerWidth - parseInt(element.style.width)));
-                position.y = Math.max(0, Math.min(position.y, containerHeight - parseInt(element.style.height)));
-
-                positions.push(position);
-            });
-
-            return positions;
-        }
-
-
-
-
-
-
 
         // Funcionalidad del buscador
         const searchInput = document.getElementById('searchInput');
@@ -361,6 +410,10 @@
             }
         });
 
+
+
+
+
         // Cargar galería al iniciar
         document.addEventListener('DOMContentLoaded', function () {
             try {
@@ -369,13 +422,8 @@
             } catch (error) {
                 console.error('Error al cargar la galería:', error);
                 document.getElementById('galleryContainer').innerHTML =
-                    '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: red; font-size: 1.2rem;">Error al cargar las imágenes</div>';
+                    '<div style="grid-column: 1 / -1; text-align: center; color: red; font-size: 1.2rem; padding: 20px;">Error al cargar las imágenes</div>';
             }
-        });
-
-        // Reposicionar imágenes cuando cambie el tamaño de la ventana
-        window.addEventListener('resize', function () {
-            setTimeout(loadGallery, 100);
         });
     </script>
 </body>
