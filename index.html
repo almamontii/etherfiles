@@ -180,69 +180,37 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .search-container {
+        .spotify-container {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
         }
 
-        .search-bar {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            padding: 8px 12px;
-            font-family: 'Inter', monospace;
-            font-weight: 300;
-            font-size: 14px;
-            color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            width: 250px;
-            height: 32px;
-            outline: none;
-            transition: all 0.2s ease;
-            text-align: left;
+        .spotify-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            border: 2px solid white;
         }
 
-        .search-bar:focus {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            border: 1px solid #0078d4;
+        .spotify-link:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .search-placeholder {
-            position: absolute;
-            top: 50%;
-            left: 12px;
-            transform: translateY(-50%);
-            pointer-events: none;
-            font-family: 'Inter', monospace;
-            font-weight: 700;
-            font-size: 14px;
+        .spotify-logo {
+            width: 30px;
+            height: 30px;
+            color: white;
         }
 
-        .search-placeholder span:nth-child(1) {
-            color: #4285F4;
-        }
 
-        .search-placeholder span:nth-child(2) {
-            color: #EA4335;
-        }
-
-        .search-placeholder span:nth-child(3) {
-            color: #FBBC05;
-        }
-
-        .search-placeholder span:nth-child(4) {
-            color: #4285F4;
-        }
-
-        .search-placeholder span:nth-child(5) {
-            color: #34A853;
-        }
-
-        .search-placeholder span:nth-child(6) {
-            color: #EA4335;
-        }
 
         .black-rectangle {
             position: fixed;
@@ -319,6 +287,218 @@
             opacity: 0.9;
         }
 
+        /* Modal de Artículos */
+        .articles-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
+        }
+
+        .articles-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: rgba(10, 10, 10, 0.95);
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            margin: auto;
+            border-radius: 16px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .articles-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-header h2 {
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .close-modal {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .modal-search {
+            padding: 35px 30px 25px 30px;
+            background: transparent;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 24px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            outline: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.5px;
+        }
+
+        .search-input:focus {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .search-input:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .articles-grid {
+            flex: 1;
+            padding: 20px 30px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .article-card:hover::before {
+            opacity: 1;
+        }
+
+        .article-title {
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-category {
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
         @media (max-width: 768px) {
             .gallery-container {
                 grid-template-columns: repeat(auto-fit, 150px);
@@ -340,6 +520,19 @@
                 font-size: 1.3rem;
                 letter-spacing: 1px;
                 margin-top: -10px;
+            }
+
+
+
+            .spotify-link {
+                width: 45px;
+                height: 45px;
+                border: 1.5px solid white;
+            }
+
+            .spotify-logo {
+                width: 25px;
+                height: 25px;
             }
         }
 
@@ -365,11 +558,15 @@
         <h1 class="main-title">etherfiles</h1>
     </div>
 
-    <div class="search-container">
-        <div class="search-bar" id="searchInput" contenteditable="true" placeholder="Search..."></div>
-        <div class="search-placeholder" id="searchPlaceholder">
-            <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>
-        </div>
+    <!-- Logo de Spotify -->
+    <div class="spotify-container">
+        <a href="https://open.spotify.com/playlist/1FGj4PtWPiUgY6Badt92Pf?si=783db37758654da8" target="_blank"
+            class="spotify-link">
+            <svg class="spotify-logo" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+            </svg>
+        </a>
     </div>
 
     <div class="gallery-container" id="galleryContainer">
@@ -382,6 +579,22 @@
         <div class="content-container">
             <img src="images/home diary.jpeg" alt="Home Diary" class="home-diary-image">
             <div class="articles-text">ETHERFILES</div>
+        </div>
+    </div>
+
+    <!-- Modal de Artículos -->
+    <div class="articles-modal" id="articlesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>ETHERFILES - Archivo de Artículos</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-search">
+                <input type="text" id="articleSearch" placeholder="Buscar artículos por título..." class="search-input">
+            </div>
+            <div class="articles-grid" id="articlesGrid">
+                <!-- Los artículos se cargarán dinámicamente aquí -->
+            </div>
         </div>
     </div>
 
@@ -451,73 +664,149 @@
             console.log('Galería cargada completamente');
         }
 
-        // Funcionalidad del buscador
-        const searchInput = document.getElementById('searchInput');
-        let typingTimer;
 
-        function applySearchColors() {
-            const text = searchInput.textContent;
-            searchInput.innerHTML = text;
 
-            // Mover cursor al final
-            const range = document.createRange();
-            const sel = window.getSelection();
-            range.selectNodeContents(searchInput);
-            range.collapse(false);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
 
-        searchInput.addEventListener('input', function () {
-            const searchTerm = this.textContent.toLowerCase();
-            console.log('Buscando:', searchTerm);
 
-            // Limpiar timer anterior
-            clearTimeout(typingTimer);
 
-            // Aplicar colores solo después de que el usuario deje de escribir por 300ms
-            typingTimer = setTimeout(applySearchColors, 300);
-        });
 
-        searchInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                console.log('Búsqueda ejecutada:', this.textContent);
+        // Base de datos de artículos
+        const articles = [
+            {
+                id: 1,
+                title: "El Futuro de la Inteligencia Artificial",
+                category: "Tecnología",
+                excerpt: "Explorando las tendencias emergentes en IA y su impacto en la sociedad moderna.",
+                date: "2024-01-15",
+                content: "Contenido completo del artículo..."
+            },
+            {
+                id: 2,
+                title: "Arquitectura Sostenible del Siglo XXI",
+                category: "Arquitectura",
+                excerpt: "Diseños innovadores que combinan estética y responsabilidad ambiental.",
+                date: "2024-01-10",
+                content: "Contenido completo del artículo..."
+            },
+            {
+                id: 3,
+                title: "Fotografía Digital: Más Allá de los Píxeles",
+                category: "Arte",
+                excerpt: "Cómo la tecnología está transformando el arte de la fotografía.",
+                date: "2024-01-08",
+                content: "Contenido completo del artículo..."
+            },
+            {
+                id: 4,
+                title: "Psicología del Color en el Diseño Web",
+                category: "Diseño",
+                excerpt: "Cómo los colores influyen en la experiencia del usuario y las conversiones.",
+                date: "2024-01-05",
+                content: "Contenido completo del artículo..."
+            },
+            {
+                id: 5,
+                title: "Blockchain: Revolución en la Economía Digital",
+                category: "Tecnología",
+                excerpt: "Análisis profundo de las criptomonedas y su impacto económico.",
+                date: "2024-01-03",
+                content: "Contenido completo del artículo..."
+            },
+            {
+                id: 6,
+                title: "Minimalismo en el Diseño de Interiores",
+                category: "Diseño",
+                excerpt: "Principios y técnicas para crear espacios minimalistas y funcionales.",
+                date: "2024-01-01",
+                content: "Contenido completo del artículo..."
             }
-        });
+        ];
 
-        // Ocultar placeholder cuando se escribe
-        searchInput.addEventListener('input', function () {
-            const placeholder = document.getElementById('searchPlaceholder');
-            if (this.textContent.length > 0) {
-                placeholder.style.display = 'none';
-            } else {
-                placeholder.style.display = 'block';
-            }
-        });
-
-        // Mostrar placeholder cuando se enfoca y está vacío
-        searchInput.addEventListener('focus', function () {
-            const placeholder = document.getElementById('searchPlaceholder');
-            if (this.textContent.length === 0) {
-                placeholder.style.display = 'block';
-            }
-        });
-
-
-
-
-
-        // Funcionalidad para la imagen clickeable
+        // Funcionalidad del modal
         document.addEventListener('DOMContentLoaded', function () {
             const homeDiaryImage = document.querySelector('.home-diary-image');
+            const modal = document.getElementById('articlesModal');
+            const closeModal = document.getElementById('closeModal');
+            const articleSearch = document.getElementById('articleSearch');
+            const articlesGrid = document.getElementById('articlesGrid');
 
+            // Abrir modal al hacer click en la imagen
             if (homeDiaryImage) {
                 homeDiaryImage.addEventListener('click', function () {
-                    console.log('Imagen Home Diary clickeada!');
-                    // Aquí puedes agregar la funcionalidad que desees
-                    // Por ejemplo: abrir un modal, navegar a otra página, etc.
-                    alert('¡Has seleccionado Home Diary!');
+                    modal.classList.add('active');
+                    loadArticles(articles);
                 });
+            }
+
+            // Cerrar modal
+            if (closeModal) {
+                closeModal.addEventListener('click', function () {
+                    modal.classList.remove('active');
+                });
+            }
+
+            // Cerrar modal al hacer click fuera
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Búsqueda de artículos
+            if (articleSearch) {
+                articleSearch.addEventListener('input', function () {
+                    const searchTerm = this.value.toLowerCase();
+                    const filteredArticles = articles.filter(article =>
+                        article.title.toLowerCase().includes(searchTerm) ||
+                        article.category.toLowerCase().includes(searchTerm) ||
+                        article.excerpt.toLowerCase().includes(searchTerm)
+                    );
+                    loadArticles(filteredArticles);
+                });
+            }
+
+            // Función para cargar artículos
+            function loadArticles(articlesToShow) {
+                articlesGrid.innerHTML = '';
+
+                if (articlesToShow.length === 0) {
+                    articlesGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #666; padding: 40px;">No se encontraron artículos</div>';
+                    return;
+                }
+
+                articlesToShow.forEach(article => {
+                    const articleCard = document.createElement('div');
+                    articleCard.className = 'article-card';
+                    articleCard.innerHTML = `
+                        <div class="article-category">${article.category}</div>
+                        <div class="article-title">${article.title}</div>
+                        <div class="article-excerpt">${article.excerpt}</div>
+                        <div class="article-date">${formatDate(article.date)}</div>
+                    `;
+
+                    articleCard.addEventListener('click', function () {
+                        openArticle(article);
+                    });
+
+                    articlesGrid.appendChild(articleCard);
+                });
+            }
+
+            // Función para formatear fecha
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            // Función para abrir artículo (puedes expandir esta funcionalidad)
+            function openArticle(article) {
+                console.log('Abriendo artículo:', article.title);
+                // Aquí puedes implementar la lógica para mostrar el artículo completo
+                alert(`Abriendo: ${article.title}\n\n${article.content}`);
             }
         });
 
