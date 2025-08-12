@@ -178,7 +178,18 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: 2px;
             font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
         }
+
+        .main-title:hover {
+            color: #0078d4;
+            transform: scale(1.05);
+            text-shadow: 2px 2px 8px rgba(0, 120, 212, 0.5);
+        }
+
+
 
         .spotify-container {
             position: fixed;
@@ -187,30 +198,30 @@
             z-index: 1000;
         }
 
-        .spotify-link {
+        .spotify-logo {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 2px solid #1DB954;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: transparent;
-            border-radius: 50%;
+            cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid white;
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
         }
 
-        .spotify-link:hover {
+        .spotify-logo:hover {
             transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
         }
 
-        .spotify-logo {
-            width: 30px;
-            height: 30px;
-            color: white;
+        .spotify-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: #1DB954;
         }
-
-
 
         .black-rectangle {
             position: fixed;
@@ -287,216 +298,123 @@
             opacity: 0.9;
         }
 
-        /* Modal de Artículos */
-        .articles-modal {
+        .articles-section {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            height: 80%;
+            max-height: 600px;
+            background: #1a1a1a;
             z-index: 2000;
             display: none;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(8px);
+            overflow-y: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
         }
 
-        .articles-modal.active {
-            display: flex;
-            opacity: 1;
+        .articles-section.active {
+            display: block;
         }
 
-        .modal-content {
-            background: rgba(10, 10, 10, 0.95);
-            width: 90%;
-            max-width: 1200px;
-            height: 90%;
-            margin: auto;
-            border-radius: 16px;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transform: scale(0.95);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .articles-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px 20px 0 20px;
         }
 
-        .articles-modal.active .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-header h2 {
+        .articles-title {
+            font-size: 2rem;
+            font-weight: 700;
             color: white;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin: 0;
-            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
 
-        .close-modal {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.5rem;
+        .close-articles {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
             cursor: pointer;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 10px;
             border-radius: 50%;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
-        .close-modal:hover {
+        .close-articles:hover {
             background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        .modal-search {
-            padding: 35px 30px 25px 30px;
-            background: transparent;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 18px 24px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 400;
-            outline: none;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            letter-spacing: 0.5px;
-        }
-
-        .search-input:focus {
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-            transform: translateY(-3px);
-        }
-
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 300;
-            letter-spacing: 0.3px;
-        }
-
-        .search-input:hover {
-            border-color: rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+            transform: scale(1.1);
         }
 
         .articles-grid {
-            flex: 1;
-            padding: 20px 30px;
-            overflow-y: auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
         }
 
         .article-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .article-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            border: 1px solid #333;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .article-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .article-card:hover::before {
-            opacity: 1;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: #0078d4;
         }
 
         .article-title {
+            font-size: 1rem;
+            font-weight: 600;
             color: white;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-            line-height: 1.4;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 5px;
+            line-height: 1.2;
         }
 
-        .article-category {
-            color: rgba(255, 255, 255, 0.7);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .article-excerpt {
-            color: rgba(255, 255, 255, 0.8);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 18px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .article-date {
-            color: rgba(255, 255, 255, 0.5);
-            font-family: 'Inter', sans-serif;
+        .article-subtitle {
             font-size: 0.8rem;
-            font-weight: 300;
-            position: relative;
-            z-index: 1;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        .article-content {
+            color: #aaa;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            flex-grow: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .no-articles {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            padding: 40px;
         }
 
         @media (max-width: 768px) {
@@ -520,19 +438,6 @@
                 font-size: 1.3rem;
                 letter-spacing: 1px;
                 margin-top: -10px;
-            }
-
-
-
-            .spotify-link {
-                width: 45px;
-                height: 45px;
-                border: 1.5px solid white;
-            }
-
-            .spotify-logo {
-                width: 25px;
-                height: 25px;
             }
         }
 
@@ -558,15 +463,13 @@
         <h1 class="main-title">etherfiles</h1>
     </div>
 
-    <!-- Logo de Spotify -->
     <div class="spotify-container">
-        <a href="https://open.spotify.com/playlist/1FGj4PtWPiUgY6Badt92Pf?si=783db37758654da8" target="_blank"
-            class="spotify-link">
-            <svg class="spotify-logo" viewBox="0 0 24 24" fill="currentColor">
+        <div class="spotify-logo" id="spotifyLogo" title="Escuchar mi playlist">
+            <svg viewBox="0 0 24 24">
                 <path
                     d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
             </svg>
-        </a>
+        </div>
     </div>
 
     <div class="gallery-container" id="galleryContainer">
@@ -582,18 +485,28 @@
         </div>
     </div>
 
-    <!-- Modal de Artículos -->
-    <div class="articles-modal" id="articlesModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>ETHERFILES - Archivo de Artículos</h2>
-                <button class="close-modal" id="closeModal">&times;</button>
+    <!-- Sección de Artículos -->
+    <div class="articles-section" id="articlesSection">
+        <button class="close-articles" id="closeArticles">&times;</button>
+        <div class="articles-header">
+            <h2 class="articles-title">Artículos de Etherfiles</h2>
+            <p style="color: #ccc; margin-top: 10px; font-size: 1rem;">Aquí puedes ver y gestionar todos tus artículos
+            </p>
+
+            <!-- Buscador de artículos -->
+            <div style="margin-top: 15px; text-align: center;">
+                <input type="text" id="articleSearch" placeholder="Buscar artículos..."
+                    style="width: 250px; padding: 8px 12px; border: 1px solid #333; border-radius: 6px; background: #2a2a2a; color: white; font-family: 'Inter', sans-serif; font-size: 12px;">
             </div>
-            <div class="modal-search">
-                <input type="text" id="articleSearch" placeholder="Buscar artículos por título..." class="search-input">
-            </div>
-            <div class="articles-grid" id="articlesGrid">
-                <!-- Los artículos se cargarán dinámicamente aquí -->
+        </div>
+        <div class="articles-grid" id="articlesGrid">
+            <div class="no-articles">
+                No hay artículos publicados aún.
+                <br>
+                <a href="editor.html"
+                    style="color: #0078d4; text-decoration: none; margin-top: 10px; display: inline-block;">
+                    Crear mi primer artículo →
+                </a>
             </div>
         </div>
     </div>
@@ -664,149 +577,167 @@
             console.log('Galería cargada completamente');
         }
 
+        // Funcionalidad del logo de Spotify
+        const spotifyLogo = document.getElementById('spotifyLogo');
 
+        spotifyLogo.addEventListener('click', function () {
+            // Enlace a tu playlist de Spotify "etherfiles"
+            const spotifyPlaylistUrl = 'https://open.spotify.com/playlist/1FGj4PtWPiUgY6Badt92Pf?si=90c93a12d28e49cd';
 
+            // Agregar parámetros para forzar la actualización
+            const updatedUrl = spotifyPlaylistUrl + '&v=' + Date.now();
 
+            // Abrir en nueva pestaña
+            const newWindow = window.open(updatedUrl, '_blank');
 
-
-
-        // Base de datos de artículos
-        const articles = [
-            {
-                id: 1,
-                title: "El Futuro de la Inteligencia Artificial",
-                category: "Tecnología",
-                excerpt: "Explorando las tendencias emergentes en IA y su impacto en la sociedad moderna.",
-                date: "2024-01-15",
-                content: "Contenido completo del artículo..."
-            },
-            {
-                id: 2,
-                title: "Arquitectura Sostenible del Siglo XXI",
-                category: "Arquitectura",
-                excerpt: "Diseños innovadores que combinan estética y responsabilidad ambiental.",
-                date: "2024-01-10",
-                content: "Contenido completo del artículo..."
-            },
-            {
-                id: 3,
-                title: "Fotografía Digital: Más Allá de los Píxeles",
-                category: "Arte",
-                excerpt: "Cómo la tecnología está transformando el arte de la fotografía.",
-                date: "2024-01-08",
-                content: "Contenido completo del artículo..."
-            },
-            {
-                id: 4,
-                title: "Psicología del Color en el Diseño Web",
-                category: "Diseño",
-                excerpt: "Cómo los colores influyen en la experiencia del usuario y las conversiones.",
-                date: "2024-01-05",
-                content: "Contenido completo del artículo..."
-            },
-            {
-                id: 5,
-                title: "Blockchain: Revolución en la Economía Digital",
-                category: "Tecnología",
-                excerpt: "Análisis profundo de las criptomonedas y su impacto económico.",
-                date: "2024-01-03",
-                content: "Contenido completo del artículo..."
-            },
-            {
-                id: 6,
-                title: "Minimalismo en el Diseño de Interiores",
-                category: "Diseño",
-                excerpt: "Principios y técnicas para crear espacios minimalistas y funcionales.",
-                date: "2024-01-01",
-                content: "Contenido completo del artículo..."
+            // Mostrar mensaje de confirmación
+            if (newWindow) {
+                console.log('Playlist de Spotify abierta');
+            } else {
+                alert('Por favor, permite popups para abrir tu playlist de Spotify');
             }
-        ];
+        });
 
-        // Funcionalidad del modal
-        document.addEventListener('DOMContentLoaded', function () {
-            const homeDiaryImage = document.querySelector('.home-diary-image');
-            const modal = document.getElementById('articlesModal');
-            const closeModal = document.getElementById('closeModal');
-            const articleSearch = document.getElementById('articleSearch');
-            const articlesGrid = document.getElementById('articlesGrid');
+        // Funcionalidad para abrir artículos
+        const mainTitle = document.querySelector('.main-title');
+        const articlesSection = document.getElementById('articlesSection');
+        const closeArticles = document.getElementById('closeArticles');
 
-            // Abrir modal al hacer click en la imagen
-            if (homeDiaryImage) {
-                homeDiaryImage.addEventListener('click', function () {
-                    modal.classList.add('active');
-                    loadArticles(articles);
-                });
-            }
+        console.log('Configurando eventos de artículos...');
+        console.log('mainTitle:', mainTitle);
+        console.log('articlesSection:', articlesSection);
 
-            // Cerrar modal
-            if (closeModal) {
-                closeModal.addEventListener('click', function () {
-                    modal.classList.remove('active');
-                });
-            }
+        if (mainTitle) {
+            mainTitle.addEventListener('click', function (e) {
+                console.log('¡Clic en etherfiles detectado!');
 
-            // Cerrar modal al hacer click fuera
-            modal.addEventListener('click', function (e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
+                // Prevenir que el clic se propague a otros elementos
+                e.stopPropagation();
+
+                if (articlesSection) {
+                    articlesSection.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+                    console.log('Sección de artículos activada');
+
+                    // Cargar artículos cuando se abre la sección
+                    if (window.ArticlesManager) {
+                        window.ArticlesManager.loadArticles();
+                        console.log('Artículos cargados');
+                    } else {
+                        console.log('ArticlesManager no disponible');
+                    }
+                } else {
+                    console.error('articlesSection no encontrado');
                 }
             });
+        } else {
+            console.error('mainTitle no encontrado');
+        }
 
-            // Búsqueda de artículos
-            if (articleSearch) {
-                articleSearch.addEventListener('input', function () {
-                    const searchTerm = this.value.toLowerCase();
-                    const filteredArticles = articles.filter(article =>
+
+
+        // Funcionalidad del buscador de artículos
+        const articleSearch = document.getElementById('articleSearch');
+        if (articleSearch) {
+            articleSearch.addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+                console.log('Buscando artículos:', searchTerm);
+
+                if (window.ArticlesManager && window.ArticlesManager.articles) {
+                    const filteredArticles = window.ArticlesManager.articles.filter(article =>
                         article.title.toLowerCase().includes(searchTerm) ||
-                        article.category.toLowerCase().includes(searchTerm) ||
-                        article.excerpt.toLowerCase().includes(searchTerm)
+                        article.subtitle.toLowerCase().includes(searchTerm) ||
+                        article.content.toLowerCase().includes(searchTerm) ||
+                        article.keywords.toLowerCase().includes(searchTerm)
                     );
-                    loadArticles(filteredArticles);
-                });
-            }
 
-            // Función para cargar artículos
-            function loadArticles(articlesToShow) {
-                articlesGrid.innerHTML = '';
-
-                if (articlesToShow.length === 0) {
-                    articlesGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #666; padding: 40px;">No se encontraron artículos</div>';
-                    return;
+                    // Mostrar artículos filtrados
+                    displayFilteredArticles(filteredArticles);
                 }
+            });
+        }
 
-                articlesToShow.forEach(article => {
-                    const articleCard = document.createElement('div');
-                    articleCard.className = 'article-card';
-                    articleCard.innerHTML = `
-                        <div class="article-category">${article.category}</div>
-                        <div class="article-title">${article.title}</div>
-                        <div class="article-excerpt">${article.excerpt}</div>
-                        <div class="article-date">${formatDate(article.date)}</div>
-                    `;
+        function displayFilteredArticles(articles) {
+            const articlesGrid = document.getElementById('articlesGrid');
 
-                    articleCard.addEventListener('click', function () {
-                        openArticle(article);
-                    });
+            if (!articlesGrid) return;
 
-                    articlesGrid.appendChild(articleCard);
-                });
+            if (articles.length === 0) {
+                articlesGrid.innerHTML = `
+                    <div class="no-articles">
+                        No se encontraron artículos que coincidan con tu búsqueda.
+                    </div>
+                `;
+                return;
             }
 
-            // Función para formatear fecha
-            function formatDate(dateString) {
-                const date = new Date(dateString);
-                return date.toLocaleDateString('es-ES', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            }
+            articlesGrid.innerHTML = articles.map(article => `
+                <div class="article-card" data-article-id="${article.id}">
+                    <div>
+                        <h3 class="article-title">${article.title}</h3>
+                        ${article.subtitle ? `<p class="article-subtitle">${article.subtitle}</p>` : ''}
+                        <div class="article-content">
+                            ${article.content.length > 80 ? article.content.substring(0, 80) + '...' : article.content}
+                        </div>
+                    </div>
+                    <div class="article-meta">
+                        <span style="font-size: 0.7rem;">${new Date(article.date).toLocaleDateString('es-ES')}</span>
+                        ${article.keywords ? `<span style="font-size: 0.7rem;">${article.keywords.split(',').slice(0, 1).join(', ')}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
 
-            // Función para abrir artículo (puedes expandir esta funcionalidad)
-            function openArticle(article) {
-                console.log('Abriendo artículo:', article.title);
-                // Aquí puedes implementar la lógica para mostrar el artículo completo
-                alert(`Abriendo: ${article.title}\n\n${article.content}`);
+        closeArticles.addEventListener('click', function () {
+            articlesSection.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restaurar scroll del body
+        });
+
+        // Cerrar artículos con ESC
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && articlesSection.classList.contains('active')) {
+                articlesSection.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Cerrar artículos haciendo clic fuera del contenido
+        articlesSection.addEventListener('click', function (e) {
+            if (e.target === articlesSection) {
+                articlesSection.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+
+
+
+
+        // Funcionalidad para la imagen clickeable - DESHABILITADA
+        // Ahora el clic en el área abrirá los artículos en lugar del mensaje de Home Diary
+        document.addEventListener('DOMContentLoaded', function () {
+            const homeDiaryImage = document.querySelector('.home-diary-image');
+            const blackRectangle = document.querySelector('.black-rectangle');
+
+            if (blackRectangle) {
+                blackRectangle.addEventListener('click', function (e) {
+                    // Prevenir que el clic se propague
+                    e.stopPropagation();
+
+                    console.log('Área de Home Diary clickeada - abriendo artículos');
+
+                    // Abrir la sección de artículos en lugar del mensaje
+                    if (articlesSection) {
+                        articlesSection.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Sección de artículos activada desde Home Diary');
+
+                        if (window.ArticlesManager) {
+                            window.ArticlesManager.loadArticles();
+                            console.log('Artículos cargados desde Home Diary');
+                        }
+                    }
+                });
             }
         });
 
@@ -815,12 +746,26 @@
             try {
                 console.log('DOM cargado, iniciando galería...');
                 loadGallery();
+
+                // Cargar artículos si el sistema está disponible
+                if (window.ArticlesManager) {
+                    window.ArticlesManager.loadArticles();
+                }
             } catch (error) {
                 console.error('Error al cargar la galería:', error);
                 document.getElementById('galleryContainer').innerHTML =
                     '<div style="grid-column: 1 / -1; text-align: center; color: red; font-size: 1.2rem; padding: 20px;">Error al cargar las imágenes</div>';
             }
         });
+    </script>
+    <script src="articles.js"></script>
+    <script>
+        // Verificar que ArticlesManager esté disponible
+        if (window.ArticlesManager) {
+            console.log('✅ ArticlesManager cargado correctamente');
+        } else {
+            console.error('❌ ArticlesManager no está disponible');
+        }
     </script>
 </body>
 

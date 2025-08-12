@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Artículos - Etherfiles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #2a2a2a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #106ebe;
+        }
+
+        .btn-secondary {
+            background: #333;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #444;
+        }
+
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 6px;
+            border: 1px solid #333;
+        }
+
+        .output h3 {
+            margin-bottom: 15px;
+            color: #0078d4;
+        }
+
+        .output pre {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .image-preview {
+            margin-top: 10px;
+            max-width: 200px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Editor de Artículos</h1>
+
+        <form id="articleForm">
+            <div class="form-group">
+                <label for="title">Título del Artículo *</label>
+                <input type="text" id="title" name="title" required placeholder="Escribe el título de tu artículo">
+            </div>
+
+            <div class="form-group">
+                <label for="subtitle">Subtítulo (opcional)</label>
+                <input type="text" id="subtitle" name="subtitle" placeholder="Escribe un subtítulo si lo necesitas">
+            </div>
+
+            <div class="form-group">
+                <label for="content">Contenido del Artículo *</label>
+                <textarea id="content" name="content" required
+                    placeholder="Escribe aquí todo el contenido de tu artículo..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Imagen Principal (opcional)</label>
+                <select id="image" name="image">
+                    <option value="">Sin imagen</option>
+                    <option value="01.jpg">01.jpg</option>
+                    <option value="02.jpg">02.jpg</option>
+                    <option value="03.jpg">03.jpg</option>
+                    <option value="04.jpg">04.jpg</option>
+                    <option value="05.jpg">05.jpg</option>
+                    <option value="07.jpg">07.jpg</option>
+                    <option value="08.jpg">08.jpg</option>
+                    <option value="11.jpg">11.jpg</option>
+                    <option value="12.jpg">12.jpg</option>
+                    <option value="13.jpg">13.jpg</option>
+                    <option value="14.jpg">14.jpg</option>
+                    <option value="18.jpg">18.jpg</option>
+                    <option value="20.jpg">20.jpg</option>
+                    <option value="23.jpg">23.jpg</option>
+                    <option value="24.jpg">24.jpg</option>
+                    <option value="25.jpg">25.jpg</option>
+                    <option value="27.jpg">27.jpg</option>
+                    <option value="29.jpg">29.jpg</option>
+                    <option value="31.jpg">31.jpg</option>
+                    <option value="34.jpg">34.jpg</option>
+                    <option value="37.jpg">37.jpg</option>
+                    <option value="38.jpg">38.jpg</option>
+                    <option value="39.jpg">39.jpg</option>
+                    <option value="40.jpg">40.jpg</option>
+                    <option value="41.jpg">41.jpg</option>
+                    <option value="home diary.jpeg">home diary.jpeg</option>
+                </select>
+                <img id="imagePreview" class="image-preview" style="display: none;">
+            </div>
+
+            <div class="form-group">
+                <label for="keywords">Palabras Clave</label>
+                <input type="text" id="keywords" name="keywords" placeholder="palabra1, palabra2, palabra3">
+            </div>
+
+            <div class="form-group">
+                <label for="date">Fecha de Publicación</label>
+                <input type="date" id="date" name="date">
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn-secondary" onclick="generateText()">Generar Texto</button>
+                <button type="button" class="btn-primary" onclick="saveArticle()">Guardar Artículo</button>
+                <button type="button" class="btn-secondary" onclick="copyToClipboard()">Copiar al Portapapeles</button>
+                <button type="button" class="btn-secondary" onclick="clearForm()">Limpiar Formulario</button>
+            </div>
+        </form>
+
+        <div class="output" id="output" style="display: none;">
+            <h3>Texto Generado:</h3>
+            <pre id="generatedText"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Establecer fecha actual por defecto
+        document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+        // Vista previa de imagen
+        document.getElementById('image').addEventListener('change', function () {
+            const preview = document.getElementById('imagePreview');
+            const selectedImage = this.value;
+
+            if (selectedImage) {
+                preview.src = `images/${selectedImage}`;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        function generateText() {
+            const formData = new FormData(document.getElementById('articleForm'));
+            const title = formData.get('title');
+            const subtitle = formData.get('subtitle');
+            const content = formData.get('content');
+            const image = formData.get('image');
+            const keywords = formData.get('keywords');
+            const date = formData.get('date');
+
+            if (!title || !content) {
+                alert('Por favor, completa al menos el título y el contenido del artículo.');
+                return;
+            }
+
+            let generatedText = `# ${title}\n\n`;
+
+            if (subtitle) {
+                generatedText += `## ${subtitle}\n\n`;
+            }
+
+            generatedText += `## Contenido del Artículo\n${content}\n\n`;
+
+            if (image) {
+                generatedText += `## Imagen Principal\n${image}\n\n`;
+            }
+
+            if (keywords) {
+                generatedText += `## Palabras Clave\n${keywords}\n\n`;
+            }
+
+            if (date) {
+                const formattedDate = new Date(date).toLocaleDateString('es-ES');
+                generatedText += `## Fecha de Publicación\n${formattedDate}\n\n`;
+            }
+
+            generatedText += `---\n\n`;
+            generatedText += `INSTRUCCIONES PARA INTEGRAR:\n`;
+            generatedText += `1. Copia este texto\n`;
+            generatedText += `2. Pásaselo al asistente para que lo integre en la página web\n`;
+            generatedText += `3. El asistente creará una nueva sección o página con tu artículo\n`;
+
+            document.getElementById('generatedText').textContent = generatedText;
+            document.getElementById('output').style.display = 'block';
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('generatedText').textContent;
+            navigator.clipboard.writeText(text).then(function () {
+                alert('¡Texto copiado al portapapeles! Ahora puedes pasárselo al asistente.');
+            }).catch(function (err) {
+                console.error('Error al copiar: ', err);
+                alert('Error al copiar al portapapeles. Puedes seleccionar y copiar el texto manualmente.');
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('articleForm').reset();
+            document.getElementById('date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('output').style.display = 'none';
+        }
+
+        function saveArticle() {
+            const formData = new FormData(document.getElementById('articleForm'));
+            const title = formData.get('title');
+            const subtitle = formData.get('subtitle');
+            const content = formData.get('content');
+            const image = formData.get('image');
+            const keywords = formData.get('keywords');
+            const date = formData.get('date');
+
+            if (!title || !content) {
+                alert('Por favor, completa al menos el título y el contenido del artículo.');
+                return;
+            }
+
+            const articleData = {
+                title,
+                subtitle,
+                content,
+                image,
+                keywords,
+                date
+            };
+
+            // Guardar artículo usando el sistema de artículos
+            if (window.ArticlesManager) {
+                window.ArticlesManager.addArticle(articleData);
+                alert('¡Artículo guardado exitosamente! Puedes verlo en la página principal.');
+                clearForm();
+            } else {
+                // Fallback: generar texto para copiar
+                generateText();
+                alert('Sistema de artículos no disponible. Se ha generado el texto para copiar.');
+            }
+        }
+    </script>
+    <script src="articles.js"></script>
+</body>
+
+</html>

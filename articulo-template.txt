@@ -1,0 +1,32 @@
+# PLANTILLA PARA ARTÍCULO
+
+## Título del Artículo
+[Escribe aquí el título principal de tu artículo]
+
+## Subtítulo (opcional)
+[Escribe aquí un subtítulo si lo necesitas]
+
+## Contenido del Artículo
+[Escribe aquí todo el contenido de tu artículo. Puedes usar párrafos, listas, etc.]
+
+### Sección 1
+[Contenido de la primera sección]
+
+### Sección 2
+[Contenido de la segunda sección]
+
+## Imagen Principal (opcional)
+[Si quieres incluir una imagen específica, escribe aquí el nombre del archivo de imagen que está en la carpeta "images/"]
+
+## Palabras Clave
+[Escribe aquí palabras clave relacionadas con tu artículo, separadas por comas]
+
+## Fecha de Publicación
+[Fecha en formato: DD/MM/YYYY]
+
+---
+INSTRUCCIONES:
+1. Reemplaza todo el texto entre corchetes [...] con tu contenido real
+2. Elimina las secciones que no necesites
+3. Guarda este archivo con un nombre descriptivo (ej: "mi-articulo.txt")
+4. Cuando termines, pásame el contenido y te lo integro en la página web 
