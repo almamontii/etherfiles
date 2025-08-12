@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Artículos - Etherfiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #0a0a0a;
+            color: white;
+        }
+
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #106ebe;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-container">
+        <h1>Test del Sistema de Artículos</h1>
+
+        <button onclick="testAddArticle()">Agregar Artículo de Prueba</button>
+        <button onclick="testLoadArticles()">Cargar Artículos</button>
+        <button onclick="testClearArticles()">Limpiar Artículos</button>
+        <button onclick="testShowArticles()">Mostrar Artículos Guardados</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script src="articles.js"></script>
+    <script>
+        function testAddArticle() {
+            if (window.ArticlesManager) {
+                const testArticle = {
+                    title: "Artículo de Prueba",
+                    subtitle: "Subtítulo de prueba",
+                    content: "Este es un artículo de prueba para verificar que el sistema funciona correctamente. Contiene texto de ejemplo y debería aparecer en la lista de artículos.",
+                    image: "01.jpg",
+                    keywords: "prueba, test, artículo",
+                    date: new Date().toISOString().split('T')[0]
+                };
+
+                window.ArticlesManager.addArticle(testArticle);
+                document.getElementById('result').innerHTML = '<p style="color: green;">✅ Artículo agregado exitosamente</p>';
+            } else {
+                document.getElementById('result').innerHTML = '<p style="color: red;">❌ ArticlesManager no está disponible</p>';
+            }
+        }
+
+        function testLoadArticles() {
+            if (window.ArticlesManager) {
+                window.ArticlesManager.loadArticles();
+                document.getElementById('result').innerHTML = '<p style="color: green;">✅ Artículos cargados</p>';
+            } else {
+                document.getElementById('result').innerHTML = '<p style="color: red;">❌ ArticlesManager no está disponible</p>';
+            }
+        }
+
+        function testClearArticles() {
+            if (window.ArticlesManager) {
+                localStorage.removeItem('etherfiles_articles');
+                window.ArticlesManager.articles = [];
+                document.getElementById('result').innerHTML = '<p style="color: green;">✅ Artículos eliminados</p>';
+            } else {
+                document.getElementById('result').innerHTML = '<p style="color: red;">❌ ArticlesManager no está disponible</p>';
+            }
+        }
+
+        function testShowArticles() {
+            if (window.ArticlesManager) {
+                const articles = window.ArticlesManager.articles;
+                if (articles.length === 0) {
+                    document.getElementById('result').innerHTML = '<p>No hay artículos guardados</p>';
+                } else {
+                    let html = '<h3>Artículos guardados:</h3>';
+                    articles.forEach((article, index) => {
+                        html += `<div style="border: 1px solid #333; padding: 10px; margin: 10px 0; border-radius: 4px;">
+                            <strong>${index + 1}. ${article.title}</strong><br>
+                            <small>Fecha: ${article.date}</small><br>
+                            <small>ID: ${article.id}</small>
+                        </div>`;
+                    });
+                    document.getElementById('result').innerHTML = html;
+                }
+            } else {
+                document.getElementById('result').innerHTML = '<p style="color: red;">❌ ArticlesManager no está disponible</p>';
+            }
+        }
+
+        // Verificar que el sistema esté cargado
+        window.addEventListener('load', function () {
+            if (window.ArticlesManager) {
+                document.getElementById('result').innerHTML = '<p style="color: green;">✅ Sistema de artículos cargado correctamente</p>';
+            } else {
+                document.getElementById('result').innerHTML = '<p style="color: red;">❌ Error: Sistema de artículos no disponible</p>';
+            }
+        });
+    </script>
+</body>
+
+</html>

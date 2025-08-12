@@ -178,70 +178,49 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: 2px;
             font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
         }
 
-        .search-container {
+        .main-title:hover {
+            color: #0078d4;
+            transform: scale(1.05);
+            text-shadow: 2px 2px 8px rgba(0, 120, 212, 0.5);
+        }
+
+
+
+        .spotify-container {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
         }
 
-        .search-bar {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            padding: 8px 12px;
-            font-family: 'Inter', monospace;
-            font-weight: 300;
-            font-size: 14px;
-            color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            width: 250px;
-            height: 32px;
-            outline: none;
-            transition: all 0.2s ease;
-            text-align: left;
+        .spotify-logo {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 2px solid #1DB954;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
         }
 
-        .search-bar:focus {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            border: 1px solid #0078d4;
+        .spotify-logo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
         }
 
-        .search-placeholder {
-            position: absolute;
-            top: 50%;
-            left: 12px;
-            transform: translateY(-50%);
-            pointer-events: none;
-            font-family: 'Inter', monospace;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .search-placeholder span:nth-child(1) {
-            color: #4285F4;
-        }
-
-        .search-placeholder span:nth-child(2) {
-            color: #EA4335;
-        }
-
-        .search-placeholder span:nth-child(3) {
-            color: #FBBC05;
-        }
-
-        .search-placeholder span:nth-child(4) {
-            color: #4285F4;
-        }
-
-        .search-placeholder span:nth-child(5) {
-            color: #34A853;
-        }
-
-        .search-placeholder span:nth-child(6) {
-            color: #EA4335;
+        .spotify-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: #1DB954;
         }
 
         .black-rectangle {
@@ -319,6 +298,125 @@
             opacity: 0.9;
         }
 
+        .articles-section {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            height: 80%;
+            max-height: 600px;
+            background: #1a1a1a;
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
+        }
+
+        .articles-section.active {
+            display: block;
+        }
+
+        .articles-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px 20px 0 20px;
+        }
+
+        .articles-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .close-articles {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-articles:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: #0078d4;
+        }
+
+        .article-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .article-subtitle {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        .article-content {
+            color: #aaa;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            flex-grow: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .no-articles {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            padding: 40px;
+        }
+
         @media (max-width: 768px) {
             .gallery-container {
                 grid-template-columns: repeat(auto-fit, 150px);
@@ -365,10 +463,12 @@
         <h1 class="main-title">etherfiles</h1>
     </div>
 
-    <div class="search-container">
-        <div class="search-bar" id="searchInput" contenteditable="true" placeholder="Search..."></div>
-        <div class="search-placeholder" id="searchPlaceholder">
-            <span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span>
+    <div class="spotify-container">
+        <div class="spotify-logo" id="spotifyLogo" title="Escuchar mi playlist">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+            </svg>
         </div>
     </div>
 
@@ -382,6 +482,32 @@
         <div class="content-container">
             <img src="images/home diary.jpeg" alt="Home Diary" class="home-diary-image">
             <div class="articles-text">ETHERFILES</div>
+        </div>
+    </div>
+
+    <!-- Sección de Artículos -->
+    <div class="articles-section" id="articlesSection">
+        <button class="close-articles" id="closeArticles">&times;</button>
+        <div class="articles-header">
+            <h2 class="articles-title">Artículos de Etherfiles</h2>
+            <p style="color: #ccc; margin-top: 10px; font-size: 1rem;">Aquí puedes ver y gestionar todos tus artículos
+            </p>
+
+            <!-- Buscador de artículos -->
+            <div style="margin-top: 15px; text-align: center;">
+                <input type="text" id="articleSearch" placeholder="Buscar artículos..."
+                    style="width: 250px; padding: 8px 12px; border: 1px solid #333; border-radius: 6px; background: #2a2a2a; color: white; font-family: 'Inter', sans-serif; font-size: 12px;">
+            </div>
+        </div>
+        <div class="articles-grid" id="articlesGrid">
+            <div class="no-articles">
+                No hay artículos publicados aún.
+                <br>
+                <a href="editor.html"
+                    style="color: #0078d4; text-decoration: none; margin-top: 10px; display: inline-block;">
+                    Crear mi primer artículo →
+                </a>
+            </div>
         </div>
     </div>
 
@@ -451,55 +577,135 @@
             console.log('Galería cargada completamente');
         }
 
-        // Funcionalidad del buscador
-        const searchInput = document.getElementById('searchInput');
-        let typingTimer;
+        // Funcionalidad del logo de Spotify
+        const spotifyLogo = document.getElementById('spotifyLogo');
 
-        function applySearchColors() {
-            const text = searchInput.textContent;
-            searchInput.innerHTML = text;
+        spotifyLogo.addEventListener('click', function () {
+            // Enlace a tu playlist de Spotify "etherfiles"
+            const spotifyPlaylistUrl = 'https://open.spotify.com/playlist/1FGj4PtWPiUgY6Badt92Pf?si=90c93a12d28e49cd';
 
-            // Mover cursor al final
-            const range = document.createRange();
-            const sel = window.getSelection();
-            range.selectNodeContents(searchInput);
-            range.collapse(false);
-            sel.removeAllRanges();
-            sel.addRange(range);
+            // Agregar parámetros para forzar la actualización
+            const updatedUrl = spotifyPlaylistUrl + '&v=' + Date.now();
+
+            // Abrir en nueva pestaña
+            const newWindow = window.open(updatedUrl, '_blank');
+
+            // Mostrar mensaje de confirmación
+            if (newWindow) {
+                console.log('Playlist de Spotify abierta');
+            } else {
+                alert('Por favor, permite popups para abrir tu playlist de Spotify');
+            }
+        });
+
+        // Funcionalidad para abrir artículos
+        const mainTitle = document.querySelector('.main-title');
+        const articlesSection = document.getElementById('articlesSection');
+        const closeArticles = document.getElementById('closeArticles');
+
+        console.log('Configurando eventos de artículos...');
+        console.log('mainTitle:', mainTitle);
+        console.log('articlesSection:', articlesSection);
+
+        if (mainTitle) {
+            mainTitle.addEventListener('click', function (e) {
+                console.log('¡Clic en etherfiles detectado!');
+
+                // Prevenir que el clic se propague a otros elementos
+                e.stopPropagation();
+
+                if (articlesSection) {
+                    articlesSection.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+                    console.log('Sección de artículos activada');
+
+                    // Cargar artículos cuando se abre la sección
+                    if (window.ArticlesManager) {
+                        window.ArticlesManager.loadArticles();
+                        console.log('Artículos cargados');
+                    } else {
+                        console.log('ArticlesManager no disponible');
+                    }
+                } else {
+                    console.error('articlesSection no encontrado');
+                }
+            });
+        } else {
+            console.error('mainTitle no encontrado');
         }
 
-        searchInput.addEventListener('input', function () {
-            const searchTerm = this.textContent.toLowerCase();
-            console.log('Buscando:', searchTerm);
 
-            // Limpiar timer anterior
-            clearTimeout(typingTimer);
 
-            // Aplicar colores solo después de que el usuario deje de escribir por 300ms
-            typingTimer = setTimeout(applySearchColors, 300);
+        // Funcionalidad del buscador de artículos
+        const articleSearch = document.getElementById('articleSearch');
+        if (articleSearch) {
+            articleSearch.addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+                console.log('Buscando artículos:', searchTerm);
+
+                if (window.ArticlesManager && window.ArticlesManager.articles) {
+                    const filteredArticles = window.ArticlesManager.articles.filter(article =>
+                        article.title.toLowerCase().includes(searchTerm) ||
+                        article.subtitle.toLowerCase().includes(searchTerm) ||
+                        article.content.toLowerCase().includes(searchTerm) ||
+                        article.keywords.toLowerCase().includes(searchTerm)
+                    );
+
+                    // Mostrar artículos filtrados
+                    displayFilteredArticles(filteredArticles);
+                }
+            });
+        }
+
+        function displayFilteredArticles(articles) {
+            const articlesGrid = document.getElementById('articlesGrid');
+
+            if (!articlesGrid) return;
+
+            if (articles.length === 0) {
+                articlesGrid.innerHTML = `
+                    <div class="no-articles">
+                        No se encontraron artículos que coincidan con tu búsqueda.
+                    </div>
+                `;
+                return;
+            }
+
+            articlesGrid.innerHTML = articles.map(article => `
+                <div class="article-card" data-article-id="${article.id}">
+                    <div>
+                        <h3 class="article-title">${article.title}</h3>
+                        ${article.subtitle ? `<p class="article-subtitle">${article.subtitle}</p>` : ''}
+                        <div class="article-content">
+                            ${article.content.length > 80 ? article.content.substring(0, 80) + '...' : article.content}
+                        </div>
+                    </div>
+                    <div class="article-meta">
+                        <span style="font-size: 0.7rem;">${new Date(article.date).toLocaleDateString('es-ES')}</span>
+                        ${article.keywords ? `<span style="font-size: 0.7rem;">${article.keywords.split(',').slice(0, 1).join(', ')}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        closeArticles.addEventListener('click', function () {
+            articlesSection.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restaurar scroll del body
         });
 
-        searchInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                console.log('Búsqueda ejecutada:', this.textContent);
+        // Cerrar artículos con ESC
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && articlesSection.classList.contains('active')) {
+                articlesSection.classList.remove('active');
+                document.body.style.overflow = 'auto';
             }
         });
 
-        // Ocultar placeholder cuando se escribe
-        searchInput.addEventListener('input', function () {
-            const placeholder = document.getElementById('searchPlaceholder');
-            if (this.textContent.length > 0) {
-                placeholder.style.display = 'none';
-            } else {
-                placeholder.style.display = 'block';
-            }
-        });
-
-        // Mostrar placeholder cuando se enfoca y está vacío
-        searchInput.addEventListener('focus', function () {
-            const placeholder = document.getElementById('searchPlaceholder');
-            if (this.textContent.length === 0) {
-                placeholder.style.display = 'block';
+        // Cerrar artículos haciendo clic fuera del contenido
+        articlesSection.addEventListener('click', function (e) {
+            if (e.target === articlesSection) {
+                articlesSection.classList.remove('active');
+                document.body.style.overflow = 'auto';
             }
         });
 
@@ -507,16 +713,30 @@
 
 
 
-        // Funcionalidad para la imagen clickeable
+        // Funcionalidad para la imagen clickeable - DESHABILITADA
+        // Ahora el clic en el área abrirá los artículos en lugar del mensaje de Home Diary
         document.addEventListener('DOMContentLoaded', function () {
             const homeDiaryImage = document.querySelector('.home-diary-image');
+            const blackRectangle = document.querySelector('.black-rectangle');
 
-            if (homeDiaryImage) {
-                homeDiaryImage.addEventListener('click', function () {
-                    console.log('Imagen Home Diary clickeada!');
-                    // Aquí puedes agregar la funcionalidad que desees
-                    // Por ejemplo: abrir un modal, navegar a otra página, etc.
-                    alert('¡Has seleccionado Home Diary!');
+            if (blackRectangle) {
+                blackRectangle.addEventListener('click', function (e) {
+                    // Prevenir que el clic se propague
+                    e.stopPropagation();
+
+                    console.log('Área de Home Diary clickeada - abriendo artículos');
+
+                    // Abrir la sección de artículos en lugar del mensaje
+                    if (articlesSection) {
+                        articlesSection.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        console.log('Sección de artículos activada desde Home Diary');
+
+                        if (window.ArticlesManager) {
+                            window.ArticlesManager.loadArticles();
+                            console.log('Artículos cargados desde Home Diary');
+                        }
+                    }
                 });
             }
         });
@@ -526,12 +746,26 @@
             try {
                 console.log('DOM cargado, iniciando galería...');
                 loadGallery();
+
+                // Cargar artículos si el sistema está disponible
+                if (window.ArticlesManager) {
+                    window.ArticlesManager.loadArticles();
+                }
             } catch (error) {
                 console.error('Error al cargar la galería:', error);
                 document.getElementById('galleryContainer').innerHTML =
                     '<div style="grid-column: 1 / -1; text-align: center; color: red; font-size: 1.2rem; padding: 20px;">Error al cargar las imágenes</div>';
             }
         });
+    </script>
+    <script src="articles.js"></script>
+    <script>
+        // Verificar que ArticlesManager esté disponible
+        if (window.ArticlesManager) {
+            console.log('✅ ArticlesManager cargado correctamente');
+        } else {
+            console.error('❌ ArticlesManager no está disponible');
+        }
     </script>
 </body>
 
