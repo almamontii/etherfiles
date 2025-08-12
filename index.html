@@ -244,6 +244,81 @@
             color: #EA4335;
         }
 
+        .black-rectangle {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background-color: #000000;
+            z-index: 999;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            gap: 5px;
+        }
+
+        .home-diary-image {
+            max-width: 95%;
+            max-height: 85%;
+            object-fit: contain;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .home-diary-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .home-diary-image:hover::before {
+            opacity: 1;
+        }
+
+        .home-diary-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .home-diary-image:active {
+            transform: translateY(-2px);
+        }
+
+        .articles-text {
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            margin-top: -20px;
+            opacity: 0.9;
+        }
+
         @media (max-width: 768px) {
             .gallery-container {
                 grid-template-columns: repeat(auto-fit, 150px);
@@ -254,6 +329,17 @@
             .image-item {
                 width: 150px;
                 height: 150px;
+            }
+
+            .black-rectangle {
+                width: 300px;
+                height: 300px;
+            }
+
+            .articles-text {
+                font-size: 1.3rem;
+                letter-spacing: 1px;
+                margin-top: -10px;
             }
         }
 
@@ -289,6 +375,13 @@
     <div class="gallery-container" id="galleryContainer">
         <div style="grid-column: 1 / -1; text-align: center; color: #666; font-size: 1.2rem; padding: 20px;">
             Cargando galería de imágenes...
+        </div>
+    </div>
+
+    <div class="black-rectangle">
+        <div class="content-container">
+            <img src="images/home diary.jpeg" alt="Home Diary" class="home-diary-image">
+            <div class="articles-text">ETHERFILES</div>
         </div>
     </div>
 
@@ -413,6 +506,20 @@
 
 
 
+
+        // Funcionalidad para la imagen clickeable
+        document.addEventListener('DOMContentLoaded', function () {
+            const homeDiaryImage = document.querySelector('.home-diary-image');
+
+            if (homeDiaryImage) {
+                homeDiaryImage.addEventListener('click', function () {
+                    console.log('Imagen Home Diary clickeada!');
+                    // Aquí puedes agregar la funcionalidad que desees
+                    // Por ejemplo: abrir un modal, navegar a otra página, etc.
+                    alert('¡Has seleccionado Home Diary!');
+                });
+            }
+        });
 
         // Cargar galería al iniciar
         document.addEventListener('DOMContentLoaded', function () {
