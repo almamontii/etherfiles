@@ -189,6 +189,36 @@
             text-shadow: 2px 2px 8px rgba(0, 120, 212, 0.5);
         }
 
+        .title-with-categories {
+            display: flex;
+            align-items: baseline;
+            gap: 30px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 20px;
+        }
+
+        .category {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #888;
+            text-transform: lowercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .category:hover {
+            color: #0078d4;
+            background: rgba(0, 120, 212, 0.1);
+            transform: translateY(-2px);
+        }
+
 
 
         .spotify-container {
@@ -439,6 +469,18 @@
                 letter-spacing: 1px;
                 margin-top: -10px;
             }
+
+            .title-with-categories {
+                gap: 20px;
+            }
+
+            .categories {
+                gap: 15px;
+            }
+
+            .category {
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -452,6 +494,18 @@
                 width: 120px;
                 height: 120px;
             }
+
+            .title-with-categories {
+                gap: 15px;
+            }
+
+            .categories {
+                gap: 10px;
+            }
+
+            .category {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -460,7 +514,14 @@
     <div class="grain"></div>
 
     <div class="title-container">
-        <h1 class="main-title">etherfiles</h1>
+        <div class="title-with-categories">
+            <h1 class="main-title">etherfiles</h1>
+            <div class="categories">
+                <span class="category">música</span>
+                <span class="category">chat</span>
+                <span class="category">random</span>
+            </div>
+        </div>
     </div>
 
     <div class="spotify-container">
@@ -737,6 +798,34 @@
                             console.log('Artículos cargados desde Home Diary');
                         }
                     }
+                });
+            }
+        });
+
+        // Funcionalidad para las categorías
+        document.addEventListener('DOMContentLoaded', function () {
+            const musicCategory = document.querySelector('.category');
+            const chatCategory = document.querySelectorAll('.category')[1];
+            const randomCategory = document.querySelectorAll('.category')[2];
+
+            if (musicCategory) {
+                musicCategory.addEventListener('click', function () {
+                    console.log('Navegando a página de música...');
+                    window.location.href = 'music.html';
+                });
+            }
+
+            if (chatCategory) {
+                chatCategory.addEventListener('click', function () {
+                    console.log('Navegando a chat anónimo...');
+                    window.location.href = 'chat.html';
+                });
+            }
+
+            if (randomCategory) {
+                randomCategory.addEventListener('click', function () {
+                    console.log('Categoría random clickeada - funcionalidad pendiente');
+                    // Aquí puedes agregar funcionalidad para random en el futuro
                 });
             }
         });
