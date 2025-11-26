@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importar desde Google Docs - Etherfiles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #0078d4;
+            text-decoration: none;
+            margin-bottom: 20px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(0, 120, 212, 0.1);
+        }
+
+        .instructions {
+            background: rgba(0, 120, 212, 0.1);
+            border: 1px solid rgba(0, 120, 212, 0.3);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .instructions h2 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #b3d9ff;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .template-example {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #ccc;
+            white-space: pre-wrap;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #2a2a2a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            min-height: 300px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #106ebe;
+        }
+
+        .btn-secondary {
+            background: #2a2a2a;
+            color: #ccc;
+            border: 1px solid #333;
+        }
+
+        .btn-secondary:hover {
+            background: #333;
+        }
+
+        .preview-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+
+        .preview-article {
+            background: rgba(42, 42, 42, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-title {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .preview-description {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #ff6b6b;
+        }
+
+        .success-message {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #51cf66;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="music.html" class="back-link">← Volver a Música</a>
+        <h1>📄 Importar Artículo desde Google Docs</h1>
+
+        <div class="instructions">
+            <h2>📋 Cómo usar:</h2>
+            
+            <h3 style="color: #fff; margin-top: 20px; margin-bottom: 10px;">Opción 1: Link de Google Docs</h3>
+            <ol>
+                <li>Comparte tu Google Doc como "Cualquiera con el link puede ver"</li>
+                <li>Copia el link del documento</li>
+                <li>Pégalo en el campo "Link de Google Docs"</li>
+                <li>Haz clic en "Importar desde Link"</li>
+            </ol>
+            
+            <h3 style="color: #fff; margin-top: 20px; margin-bottom: 10px;">Opción 2: Copiar y Pegar</h3>
+            <ol>
+                <li>Crea tu artículo en Google Docs con este formato:</li>
+            </ol>
+            <div class="template-example">TÍTULO: [Nombre del artículo]
+DESCRIPCIÓN: [Tu descripción aquí]
+IMAGEN: [nombre.jpg o URL] (opcional)
+SPOTIFY: [URL de playlist de Spotify]
+TAMAÑO: small|medium|large|tall (opcional, default: medium)
+
+---
+
+Si quieres crear múltiples artículos, separa cada uno con "---" en una línea nueva.</div>
+            <ol start="2">
+                <li>Copia todo el contenido de tu Google Doc</li>
+                <li>Pégalo en el campo de abajo</li>
+                <li>Haz clic en "Procesar y Agregar"</li>
+            </ol>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 30px;">
+            <label for="docLink">Link de Google Docs (opcional):</label>
+            <input type="text" id="docLink" name="docLink" 
+                   placeholder="https://docs.google.com/document/d/..." 
+                   style="width: 100%; padding: 12px; border: 1px solid #333; border-radius: 6px; background: #2a2a2a; color: #fff; font-family: 'Inter', sans-serif; font-size: 14px;">
+            <button type="button" class="btn-secondary" onclick="importFromLink()" style="margin-top: 10px;">
+                📥 Importar desde Link
+            </button>
+            <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 5px;">
+                Asegúrate de que el documento esté compartido como "Cualquiera con el link puede ver"
+            </small>
+        </div>
+
+        <form id="importForm">
+            <div class="form-group">
+                <label for="content">Pega aquí el contenido de tu Google Doc:</label>
+                <textarea id="content" name="content" required placeholder="Pega aquí el contenido de tu Google Doc..."></textarea>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn-secondary" onclick="clearForm()">Limpiar</button>
+                <button type="button" class="btn-secondary" onclick="previewContent()">Vista Previa</button>
+                <button type="submit" class="btn-primary">✅ Procesar y Agregar</button>
+            </div>
+        </form>
+
+        <div id="previewSection" class="preview-section" style="display: none;">
+            <h2>Vista Previa:</h2>
+            <div id="previewContent"></div>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function clearForm() {
+            document.getElementById('content').value = '';
+            document.getElementById('docLink').value = '';
+            document.getElementById('previewSection').style.display = 'none';
+            document.getElementById('message').innerHTML = '';
+        }
+
+        async function importFromLink() {
+            const docLink = document.getElementById('docLink').value.trim();
+            
+            if (!docLink) {
+                document.getElementById('message').innerHTML = 
+                    '<div class="error-message">Por favor, ingresa un link de Google Docs.</div>';
+                return;
+            }
+            
+            // Convertir link de Google Docs a formato de exportación (texto plano)
+            const docId = docLink.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            
+            if (!docId) {
+                document.getElementById('message').innerHTML = 
+                    '<div class="error-message">Link inválido. Por favor, usa un link completo de Google Docs.</div>';
+                return;
+            }
+            
+            const exportUrl = `https://docs.google.com/document/d/${docId[1]}/export?format=txt`;
+            
+            document.getElementById('message').innerHTML = 
+                '<div style="color: #0078d4;">⏳ Descargando contenido...</div>';
+            
+            try {
+                // Usar proxy CORS o intentar fetch directo
+                const response = await fetch(exportUrl);
+                
+                if (!response.ok) {
+                    throw new Error('No se pudo acceder al documento. Asegúrate de que esté compartido públicamente.');
+                }
+                
+                const text = await response.text();
+                
+                if (!text || text.length < 10) {
+                    throw new Error('El documento parece estar vacío o no es accesible.');
+                }
+                
+                document.getElementById('content').value = text;
+                document.getElementById('message').innerHTML = 
+                    '<div class="success-message">✅ Contenido descargado exitosamente. Ahora puedes hacer vista previa o procesarlo.</div>';
+                
+                // Auto preview
+                setTimeout(() => previewContent(), 500);
+                
+            } catch (error) {
+                document.getElementById('message').innerHTML = 
+                    `<div class="error-message">❌ Error: ${error.message}<br><br>
+                    <strong>Solución:</strong> Por favor, copia el contenido manualmente del Google Doc y pégalo en el campo de texto de abajo.</div>`;
+            }
+        }
+
+        function parseContent(text) {
+            const articles = [];
+            const sections = text.split(/\n---+\n/).filter(s => s.trim());
+            
+            sections.forEach(section => {
+                const lines = section.split('\n').map(l => l.trim()).filter(l => l);
+                const article = {};
+                
+                lines.forEach(line => {
+                    if (line.toUpperCase().startsWith('TÍTULO:')) {
+                        article.title = line.substring(7).trim();
+                    } else if (line.toUpperCase().startsWith('TITULO:')) {
+                        article.title = line.substring(7).trim();
+                    } else if (line.toUpperCase().startsWith('DESCRIPCIÓN:') || line.toUpperCase().startsWith('DESCRIPCION:')) {
+                        article.description = line.substring(12).trim();
+                    } else if (line.toUpperCase().startsWith('IMAGEN:')) {
+                        article.image = line.substring(7).trim();
+                    } else if (line.toUpperCase().startsWith('SPOTIFY:')) {
+                        article.spotifyUrl = line.substring(8).trim();
+                    } else if (line.toUpperCase().startsWith('TAMAÑO:') || line.toUpperCase().startsWith('TAMAÑO:')) {
+                        article.size = line.substring(7).trim().toLowerCase();
+                    } else if (article.description) {
+                        // Si ya hay descripción, agregar líneas adicionales
+                        article.description += ' ' + line;
+                    } else if (!article.title && line) {
+                        // Si no hay título aún y hay contenido, usarlo como título
+                        article.title = line;
+                    }
+                });
+                
+                // Validar que tenga al menos título y spotify
+                if (article.title && article.spotifyUrl) {
+                    if (!article.size) article.size = 'medium';
+                    articles.push(article);
+                }
+            });
+            
+            return articles;
+        }
+
+        function convertSpotifyUrl(url) {
+            if (!url) return '';
+            if (url.includes('embed')) return url;
+            
+            const playlistMatch = url.match(/playlist\/([a-zA-Z0-9]+)/);
+            const albumMatch = url.match(/album\/([a-zA-Z0-9]+)/);
+            
+            if (playlistMatch) {
+                return `https://open.spotify.com/embed/playlist/${playlistMatch[1]}`;
+            } else if (albumMatch) {
+                return `https://open.spotify.com/embed/album/${albumMatch[1]}`;
+            }
+            
+            return url;
+        }
+
+        function previewContent() {
+            const content = document.getElementById('content').value;
+            if (!content.trim()) {
+                alert('Por favor, pega el contenido primero');
+                return;
+            }
+            
+            const articles = parseContent(content);
+            
+            if (articles.length === 0) {
+                document.getElementById('message').innerHTML = 
+                    '<div class="error-message">No se pudieron parsear artículos. Asegúrate de seguir el formato correcto.</div>';
+                document.getElementById('previewSection').style.display = 'none';
+                return;
+            }
+            
+            let previewHTML = `<p style="color: #aaa; margin-bottom: 20px;">Se encontraron ${articles.length} artículo(s):</p>`;
+            
+            articles.forEach((article, index) => {
+                const spotifyUrl = convertSpotifyUrl(article.spotifyUrl);
+                previewHTML += `
+                    <div class="preview-article">
+                        <div class="preview-title">${index + 1}. ${article.title}</div>
+                        ${article.description ? `<div class="preview-description">${article.description}</div>` : ''}
+                        ${article.image ? `<div style="color: #888; font-size: 0.9rem;">🖼️ Imagen: ${article.image}</div>` : ''}
+                        <div style="color: #888; font-size: 0.9rem; margin-top: 5px;">📏 Tamaño: ${article.size}</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('previewContent').innerHTML = previewHTML;
+            document.getElementById('previewSection').style.display = 'block';
+            document.getElementById('message').innerHTML = '';
+        }
+
+        document.getElementById('importForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const content = document.getElementById('content').value;
+            if (!content.trim()) {
+                document.getElementById('message').innerHTML = 
+                    '<div class="error-message">Por favor, pega el contenido primero.</div>';
+                return;
+            }
+            
+            const articles = parseContent(content);
+            
+            if (articles.length === 0) {
+                document.getElementById('message').innerHTML = 
+                    '<div class="error-message">No se pudieron parsear artículos. Verifica el formato.</div>';
+                return;
+            }
+            
+            // Obtener artículos existentes
+            const existingArticles = JSON.parse(localStorage.getItem('etherfiles_music_articles')) || [];
+            
+            // Convertir URLs de Spotify y agregar artículos
+            articles.forEach(article => {
+                article.spotifyUrl = convertSpotifyUrl(article.spotifyUrl);
+                existingArticles.push(article);
+            });
+            
+            // Guardar
+            localStorage.setItem('etherfiles_music_articles', JSON.stringify(existingArticles));
+            
+            document.getElementById('message').innerHTML = 
+                `<div class="success-message">✅ ¡Éxito! Se agregaron ${articles.length} artículo(s). Ve a la página de Música para verlos.</div>`;
+            
+            clearForm();
+            setTimeout(() => {
+                window.location.href = 'music.html';
+            }, 2000);
+        });
+    </script>
+</body>
+
+</html>
+

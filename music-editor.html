@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Artículos de Música - Etherfiles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #0078d4;
+            text-decoration: none;
+            margin-bottom: 20px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(0, 120, 212, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #2a2a2a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .size-preview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .size-option {
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #2a2a2a;
+        }
+
+        .size-option:hover {
+            border-color: #0078d4;
+        }
+
+        .size-option.selected {
+            border-color: #0078d4;
+            background: rgba(0, 120, 212, 0.1);
+        }
+
+        .size-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .size-desc {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #106ebe;
+        }
+
+        .btn-secondary {
+            background: #2a2a2a;
+            color: #ccc;
+            border: 1px solid #333;
+        }
+
+        .btn-secondary:hover {
+            background: #333;
+        }
+
+        .info-box {
+            background: rgba(0, 120, 212, 0.1);
+            border: 1px solid rgba(0, 120, 212, 0.3);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #b3d9ff;
+        }
+
+        .info-box strong {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="music.html" class="back-link">← Volver a Música</a>
+        <h1>Editor de Artículos de Música</h1>
+
+        <div class="info-box">
+            <strong>💡 Cómo obtener la URL de Spotify:</strong><br>
+            1. Abre tu playlist en Spotify<br>
+            2. Haz clic en los "..." (tres puntos)<br>
+            3. Selecciona "Compartir" → "Copiar enlace de playlist"<br>
+            4. Pega el enlace aquí. Se convertirá automáticamente al formato embed.
+        </div>
+
+        <form id="musicArticleForm">
+            <div class="form-group">
+                <label for="title">Título del Artículo *</label>
+                <input type="text" id="title" name="title" required placeholder="Ej: Canciones para estudiar">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Descripción *</label>
+                <textarea id="description" name="description" required placeholder="Descripción breve del artículo o playlist..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Imagen (opcional)</label>
+                <input type="text" id="image" name="image" 
+                       placeholder="Nombre del archivo (ej: 01.jpg) o URL de imagen">
+                <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 5px;">
+                    Puedes usar imágenes de la carpeta "images/" o una URL externa. Si no agregas imagen, se usará un gradiente de color.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="spotifyUrl">URL de Spotify (Playlist/Álbum) *</label>
+                <input type="text" id="spotifyUrl" name="spotifyUrl" required 
+                       placeholder="https://open.spotify.com/playlist/... o https://open.spotify.com/album/...">
+            </div>
+
+            <div class="form-group">
+                <label>Tamaño del artículo</label>
+                <div class="size-preview">
+                    <div class="size-option" data-size="small">
+                        <div class="size-label">Small</div>
+                        <div class="size-desc">Normal</div>
+                    </div>
+                    <div class="size-option selected" data-size="medium">
+                        <div class="size-label">Medium</div>
+                        <div class="size-desc">Mediano</div>
+                    </div>
+                    <div class="size-option" data-size="large">
+                        <div class="size-label">Large</div>
+                        <div class="size-desc">2 columnas</div>
+                    </div>
+                    <div class="size-option" data-size="tall">
+                        <div class="size-label">Tall</div>
+                        <div class="size-desc">2 filas</div>
+                    </div>
+                </div>
+                <input type="hidden" id="size" name="size" value="medium">
+            </div>
+
+            <div class="form-group">
+                <label>Tipo</label>
+                <select id="type" name="type">
+                    <option value="article">Artículo</option>
+                    <option value="playlist">Playlist (MIXES)</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn-secondary" onclick="clearForm()">Limpiar</button>
+                <button type="submit" class="btn-primary">Agregar Artículo</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Selección de tamaño
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                document.getElementById('size').value = this.dataset.size;
+            });
+        });
+
+        function clearForm() {
+            document.getElementById('musicArticleForm').reset();
+            document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector('.size-option[data-size="medium"]').classList.add('selected');
+            document.getElementById('size').value = 'medium';
+        }
+
+        function convertSpotifyUrl(url) {
+            // Convertir URL de Spotify a formato embed
+            if (!url) return '';
+            
+            // Si ya es una URL de embed, devolverla
+            if (url.includes('embed')) return url;
+            
+            // Extraer ID de playlist o album
+            const playlistMatch = url.match(/playlist\/([a-zA-Z0-9]+)/);
+            const albumMatch = url.match(/album\/([a-zA-Z0-9]+)/);
+            
+            if (playlistMatch) {
+                return `https://open.spotify.com/embed/playlist/${playlistMatch[1]}`;
+            } else if (albumMatch) {
+                return `https://open.spotify.com/embed/album/${albumMatch[1]}`;
+            }
+            
+            return url;
+        }
+
+        document.getElementById('musicArticleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const type = formData.get('type');
+            const title = formData.get('title');
+            const description = formData.get('description');
+            const spotifyUrl = convertSpotifyUrl(formData.get('spotifyUrl'));
+            const size = formData.get('size');
+            
+            // Obtener artículos/playlists existentes desde localStorage
+            const existingArticles = JSON.parse(localStorage.getItem('etherfiles_music_articles')) || [];
+            const existingPlaylists = JSON.parse(localStorage.getItem('etherfiles_music_playlists')) || [];
+            
+            const image = formData.get('image');
+            
+            const newItem = {
+                title,
+                description,
+                spotifyUrl,
+                ...(image && { image }),
+                ...(type === 'article' && { size })
+            };
+            
+            if (type === 'article') {
+                existingArticles.push(newItem);
+                localStorage.setItem('etherfiles_music_articles', JSON.stringify(existingArticles));
+                alert('¡Artículo agregado exitosamente! Ve a la página de Música para verlo.');
+            } else {
+                existingPlaylists.push(newItem);
+                localStorage.setItem('etherfiles_music_playlists', JSON.stringify(existingPlaylists));
+                alert('¡Playlist agregada exitosamente! Ve a la página de Música para verla.');
+            }
+            
+            clearForm();
+        });
+    </script>
+</body>
+
+</html>
+
