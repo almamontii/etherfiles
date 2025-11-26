@@ -993,6 +993,9 @@
                         reader.readAsDataURL(file);
                     }
                 });
+                
+                // Limpiar el input para permitir seleccionar el mismo archivo otra vez
+                event.target.value = '';
             }
 
             addImagePreview(imageData, container) {
@@ -1000,13 +1003,18 @@
                 previewItem.className = 'image-preview-item';
                 previewItem.innerHTML = `
                     <img src="${imageData}" alt="Preview">
-                    <button type="button" class="image-preview-remove" onclick="this.parentElement.remove(); window.notesManager.removeImageFromSelection('${imageData}')">×</button>
+                    <button type="button" class="image-preview-remove">×</button>
                 `;
+                const removeBtn = previewItem.querySelector('.image-preview-remove');
+                removeBtn.addEventListener('click', () => {
+                    // Encontrar el índice de esta imagen
+                    const index = this.selectedImages.indexOf(imageData);
+                    if (index > -1) {
+                        this.selectedImages.splice(index, 1);
+                        previewItem.remove();
+                    }
+                });
                 container.appendChild(previewItem);
-            }
-
-            removeImageFromSelection(imageData) {
-                this.selectedImages = this.selectedImages.filter(img => img !== imageData);
             }
 
             openNotesModal() {
@@ -1124,8 +1132,8 @@
                 // Imágenes
                 if (note.images && note.images.length > 0) {
                     contentHTML += '<div class="note-view-images">';
-                    note.images.forEach(imageData => {
-                        contentHTML += `<img src="${imageData}" class="note-view-image" alt="Imagen de nota">`;
+                    note.images.forEach((imageData, imgIndex) => {
+                        contentHTML += `<img src="${imageData}" class="note-view-image" alt="Imagen de nota" onclick="window.open('${imageData}', '_blank')">`;
                     });
                     contentHTML += '</div>';
                 }
@@ -1208,52 +1216,103 @@
 
             displayNotes() {
                 // Generar HTML de las notas
-                const notesHTML = this.notes.map(note => {
+                const notesHTML = this.notes.map((note, index) => {
                     const hasLink = note.link && note.link.trim() !== '';
                     const isVideo = hasLink && this.isVideoLink(note.link);
                     const embedUrl = isVideo ? this.getVideoEmbedUrl(note.link) : null;
+                    const showFullView = this.shouldShowFullView(note);
+                    const noteId = `note-${index}`;
 
-                    if (hasLink && isVideo && embedUrl) {
-                        return `
-                            <div class="note-item clickable with-video" onclick="window.open('${this.escapeHtml(note.link)}', '_blank')" title="Click para abrir video">
-                                <div class="note-video-container">
-                                    <iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                                </div>
-                                <div class="note-text-overlay">
-                                    <div class="note-content">
-                                        ${this.escapeHtml(note.text)}
-                                    </div>
-                                </div>
-                                <div class="note-meta">
-                                    <span>${new Date(note.timestamp).toLocaleDateString('es-ES')}</span>
-                                    <span class="note-color ${note.color}"></span>
-                                </div>
-                            </div>
-                        `;
-                    } else if (hasLink) {
-                        return `
-                            <div class="note-item clickable" onclick="window.open('${this.escapeHtml(note.link)}', '_blank')" title="Click para abrir link">
-                                <div class="note-content">
-                                    ${this.escapeHtml(note.text)}
-                                    <span class="note-link-indicator">🔗</span>
-                                </div>
-                                <div class="note-meta">
-                                    <span>${new Date(note.timestamp).toLocaleDateString('es-ES')}</span>
-                                    <span class="note-color ${note.color}"></span>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        return `
-                            <div class="note-item">
-                                <div class="note-content">${this.escapeHtml(note.text)}</div>
-                                <div class="note-meta">
-                                    <span>${new Date(note.timestamp).toLocaleDateString('es-ES')}</span>
-                                    <span class="note-color ${note.color}"></span>
-                                </div>
-                            </div>
-                        `;
+                    // Determinar si la nota debe ser clickeable
+                    let clickHandler = '';
+                    let clickableClass = '';
+                    let titleAttr = '';
+                    
+                    if (showFullView) {
+                        clickableClass = 'clickable';
+                        clickHandler = `onclick="window.notesManager.openNoteViewModal(window.notesManager.notes[${index}])"`;
+                        titleAttr = 'title="Click para ver nota completa"';
+                    } else if (hasLink && !isVideo) {
+                        clickableClass = 'clickable';
+                        clickHandler = `onclick="window.open('${this.escapeHtml(note.link)}', '_blank')"`;
+                        titleAttr = 'title="Click para abrir link"';
+                    } else if (hasLink && isVideo && embedUrl) {
+                        clickableClass = 'clickable';
+                        clickHandler = `onclick="window.open('${this.escapeHtml(note.link)}', '_blank')"`;
+                        titleAttr = 'title="Click para abrir video"';
                     }
+
+                    // Construir contenido de la nota
+                    let contentHTML = '';
+
+                    // Video si tiene
+                    if (hasLink && isVideo && embedUrl) {
+                        contentHTML += `
+                            <div class="note-video-container">
+                                <iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            </div>
+                        `;
+                        if (note.text) {
+                            contentHTML += '<div class="note-text-overlay">';
+                        }
+                    }
+
+                    // Imágenes (solo preview en tarjeta, máximo 2)
+                    if (note.images && note.images.length > 0) {
+                        const imagesToShow = note.images.slice(0, 2);
+                        contentHTML += '<div class="note-images-container">';
+                        imagesToShow.forEach(imageData => {
+                            contentHTML += `<img src="${imageData}" class="note-image-thumbnail" alt="Imagen">`;
+                        });
+                        if (note.images.length > 2) {
+                            contentHTML += `<div style="width: calc(50% - 4px); height: 100px; background: rgba(0,0,0,0.7); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem;">+${note.images.length - 2} más</div>`;
+                        }
+                        contentHTML += '</div>';
+                    }
+
+                    // Texto (truncado si es largo - siempre truncar en las tarjetas)
+                    let noteText = note.text || '';
+                    let displayText = noteText;
+                    const isTextLong = noteText.length > 150;
+                    
+                    // Siempre truncar si el texto es largo para mantener las tarjetas uniformes
+                    if (isTextLong) {
+                        displayText = noteText.substring(0, 150) + '...';
+                    }
+
+                    if (displayText || (!hasLink && !note.images)) {
+                        contentHTML += `<div class="note-content">${this.escapeHtml(displayText)}`;
+                        // Mostrar indicador "Ver más" solo si la nota es clickeable (texto largo o tiene imágenes)
+                        if (showFullView) {
+                            contentHTML += '<span class="note-expand-indicator">... Ver más</span>';
+                        }
+                        contentHTML += '</div>';
+                    }
+
+                    if (hasLink && isVideo && embedUrl && note.text) {
+                        contentHTML += '</div>';
+                    }
+
+                    // Link indicator si tiene link pero no es video
+                    if (hasLink && !isVideo) {
+                        contentHTML += '<span class="note-link-indicator">🔗</span>';
+                    }
+
+                    // Construir HTML final
+                    let itemClasses = 'note-item';
+                    if (clickableClass) itemClasses += ' ' + clickableClass;
+                    if (note.images && note.images.length > 0) itemClasses += ' with-images';
+                    if (hasLink && isVideo && embedUrl) itemClasses += ' with-video';
+
+                    return `
+                        <div class="${itemClasses}" ${clickHandler} ${titleAttr} id="${noteId}">
+                            ${contentHTML}
+                            <div class="note-meta">
+                                <span>${new Date(note.timestamp).toLocaleDateString('es-ES')}</span>
+                                <span class="note-color ${note.color}"></span>
+                            </div>
+                        </div>
+                    `;
                 }).join('');
 
                 // Agregar el botón de agregar nota al final
@@ -1279,7 +1338,7 @@
 
         // Inicializar cuando se carga la página
         document.addEventListener('DOMContentLoaded', () => {
-            new NotesManager();
+            window.notesManager = new NotesManager();
         });
     </script>
 </body>
