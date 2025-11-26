@@ -178,15 +178,6 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: 2px;
             font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-
-        .main-title:hover {
-            color: #0078d4;
-            transform: scale(1.05);
-            text-shadow: 2px 2px 8px rgba(0, 120, 212, 0.5);
         }
 
         .title-with-categories {
@@ -659,43 +650,9 @@
             }
         });
 
-        // Funcionalidad para abrir artículos
-        const mainTitle = document.querySelector('.main-title');
+        // Funcionalidad para cerrar artículos
         const articlesSection = document.getElementById('articlesSection');
         const closeArticles = document.getElementById('closeArticles');
-
-        console.log('Configurando eventos de artículos...');
-        console.log('mainTitle:', mainTitle);
-        console.log('articlesSection:', articlesSection);
-
-        if (mainTitle) {
-            mainTitle.addEventListener('click', function (e) {
-                console.log('¡Clic en etherfiles detectado!');
-
-                // Prevenir que el clic se propague a otros elementos
-                e.stopPropagation();
-
-                if (articlesSection) {
-                    articlesSection.classList.add('active');
-                    document.body.style.overflow = 'hidden'; // Prevenir scroll del body
-                    console.log('Sección de artículos activada');
-
-                    // Cargar artículos cuando se abre la sección
-                    if (window.ArticlesManager) {
-                        window.ArticlesManager.loadArticles();
-                        console.log('Artículos cargados');
-                    } else {
-                        console.log('ArticlesManager no disponible');
-                    }
-                } else {
-                    console.error('articlesSection no encontrado');
-                }
-            });
-        } else {
-            console.error('mainTitle no encontrado');
-        }
-
-
 
         // Funcionalidad del buscador de artículos
         const articleSearch = document.getElementById('articleSearch');
@@ -775,32 +732,6 @@
 
 
         // Funcionalidad para la imagen clickeable - DESHABILITADA
-        // Ahora el clic en el área abrirá los artículos en lugar del mensaje de Home Diary
-        document.addEventListener('DOMContentLoaded', function () {
-            const homeDiaryImage = document.querySelector('.home-diary-image');
-            const blackRectangle = document.querySelector('.black-rectangle');
-
-            if (blackRectangle) {
-                blackRectangle.addEventListener('click', function (e) {
-                    // Prevenir que el clic se propague
-                    e.stopPropagation();
-
-                    console.log('Área de Home Diary clickeada - abriendo artículos');
-
-                    // Abrir la sección de artículos en lugar del mensaje
-                    if (articlesSection) {
-                        articlesSection.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        console.log('Sección de artículos activada desde Home Diary');
-
-                        if (window.ArticlesManager) {
-                            window.ArticlesManager.loadArticles();
-                            console.log('Artículos cargados desde Home Diary');
-                        }
-                    }
-                });
-            }
-        });
 
         // Funcionalidad para las categorías
         document.addEventListener('DOMContentLoaded', function () {
@@ -824,8 +755,8 @@
 
             if (randomCategory) {
                 randomCategory.addEventListener('click', function () {
-                    console.log('Categoría random clickeada - funcionalidad pendiente');
-                    // Aquí puedes agregar funcionalidad para random en el futuro
+                    console.log('Navegando a página de notas...');
+                    window.location.href = 'notes.html?add=true';
                 });
             }
         });
